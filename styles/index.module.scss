@@ -1,0 +1,93 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #000;
+}
+.logo {
+  position: absolute !important;
+  top: -200px !important;
+  left: 20px !important;
+}
+.introPageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.imageTest {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+}
+.loadingAnimation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  .loadingAnimationInner {
+    position: relative;
+  }
+  .loadingAnimationImage {
+    width: 400px;
+    height: auto;
+    display: block;
+  }
+  .nftLink {
+    width: 65px;
+    height: 25px;
+
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+  }
+}
+.laserEyesContainer {
+  margin-top: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.laserContainer {
+  position: relative;
+}
+@keyframes grow {
+  to {
+    width: 100px;
+  }
+}
+.innerLine {
+  width: 0;
+  height: 5px;
+  background: white;
+  filter: blur(2px);
+  transform: rotate(-30deg);
+  transform-origin: left !important;
+  position: absolute;
+  bottom: 5px;
+}
+.outerLine {
+  width: 0;
+  transform-origin: left;
+  height: 15px;
+  background: red;
+  transform: rotate(-30deg);
+  margin-top: 50px;
+  filter: blur(8px);
+}
+
+@media (min-width: 550px) {
+  .loadingAnimation {
+    .loadingAnimationImage {
+      width: 500px;
+    }
+    .nftLink {
+      width: 65px;
+      height: 30px;
+
+      position: absolute;
+      right: 0;
+      bottom: -6px;
+    }
+  }
+}
