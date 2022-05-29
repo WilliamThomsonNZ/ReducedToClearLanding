@@ -10,6 +10,9 @@
   background: #ffff;
   border: 7px solid #000;
   padding: 15px 25px;
+  max-width: 600px;
+
+  opacity: 0;
   &::after {
     content: "";
     width: 100%;
@@ -19,15 +22,17 @@
     left: 10px;
     bottom: -20px;
     z-index: -1;
+    background: #000;
   }
   span {
     line-height: 2;
   }
 }
+
 .typingTextContainer {
-  position: relative;
+  position: absolute;
   height: fit-content;
-  margin-top: 75vh;
+  top: 75vh;
   z-index: 1;
 }
 .buttonContainer {

@@ -8,18 +8,19 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [clicked, setClicked] = useState(false);
-
+  const [laserColour, setLaserColour] = useState("ff0000");
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      setLoading();
     }, 8000);
   }, []);
-
+  const colors = ["#06ff29", "ff0000", "#06aeff", "#da06ff"];
   const laserLine = {
     fire: {
       width: 5000,
       transition: {
-        duration: 1,
+        duration: 0.5,
+        delay: 1.5,
       },
     },
     width: {
@@ -27,6 +28,21 @@ export default function Home() {
     },
     stop: {
       width: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
+  const eyes = {
+    fire: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+      },
+    },
+    stop: {
+      opacity: 0,
       transition: {
         duration: 1,
       },
@@ -50,6 +66,7 @@ export default function Home() {
               href="https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/62841633602125627004461028476566339821126370754397700221279471775592520613889"
               className={styles.nftLink}
               target="_blank"
+              rel="noreferrer"
             />
           </div>
         </div>
@@ -58,46 +75,80 @@ export default function Home() {
           {" "}
           <div className={styles.introPageContainer}>
             <div className={styles.typingTextContainer}>
+              <div className={styles.laserEyesContainer}>
+                <div className={styles.eyesContainer}>
+                  <div className={styles.eye}>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.outerEye}
+                      style={{ backgroundColor: laserColour }}
+                    ></motion.div>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.innerEye}
+                    ></motion.div>
+                  </div>
+                  <div className={styles.laserContainer}>
+                    <motion.div
+                      variants={laserLine}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.outerLine}
+                      style={{ backgroundColor: laserColour }}
+                      onAnimationComplete={() => {
+                        // setLaserColour(colors[Math.floor(Math.random() * 4)]);
+                        setClicked(false);
+                      }}
+                    ></motion.div>
+                    <motion.div
+                      variants={laserLine}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.innerLine}
+                    ></motion.div>
+                  </div>
+                </div>
+                <div className={styles.eyesContainer}>
+                  <div className={styles.eye}>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.outerEye}
+                      style={{ backgroundColor: laserColour }}
+                    ></motion.div>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.innerEye}
+                    ></motion.div>
+                  </div>
+                  <div className={styles.laserContainer}>
+                    <motion.div
+                      variants={laserLine}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.outerLine}
+                      style={{ backgroundColor: laserColour }}
+                    ></motion.div>
+                    <motion.div
+                      variants={laserLine}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.innerLine}
+                    ></motion.div>
+                  </div>
+                </div>
+              </div>
               <TypingText
                 text={
                   "Dark forces of the non-fungible kind are converging XX/XX/2022 @ 11:11PM EST..."
                 }
               />
+
               {/* <Image
                 src={"/testLogo.png"}
                 width={200}
                 height={200}
                 className={styles.logo}
               /> */}
-            </div>
-            <div className={styles.laserEyesContainer}>
-              <div className={styles.laserContainer}>
-                <motion.div
-                  variants={laserLine}
-                  animate={clicked ? "fire" : "stop"}
-                  className={styles.outerLine}
-                  onAnimationComplete={() => setClicked(false)}
-                ></motion.div>
-                <motion.div
-                  variants={laserLine}
-                  animate={clicked ? "fire" : "stop"}
-                  className={styles.innerLine}
-                ></motion.div>
-                <motion.div className={styles.circleRed}></motion.div>
-                <motion.div className={styles.circleWhite}></motion.div>
-              </div>
-              <div className={styles.laserContainer}>
-                <motion.div
-                  variants={laserLine}
-                  animate={clicked ? "fire" : "stop"}
-                  className={styles.outerLine}
-                ></motion.div>
-                <motion.div
-                  variants={laserLine}
-                  animate={clicked ? "fire" : "stop"}
-                  className={styles.innerLine}
-                ></motion.div>
-              </div>
             </div>
           </div>
         </>
