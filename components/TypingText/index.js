@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import styles from "./typing.module.scss";
 import { motion } from "framer-motion";
 import Triangle from "../../assets/triangle.svg";
-const TypingText = ({ text }) => {
+const TypingText = ({ text, clicked, setClicked }) => {
   const splitText = text.split("");
   const textContainerVariants = {
     initial: { opacity: 0 },
@@ -11,11 +12,43 @@ const TypingText = ({ text }) => {
       transition: {
         duration: 0,
         staggerChildren: 0.04,
-        delayChildren: 1,
+        delayChildren: 2,
+      },
+    },
+  };
+  const laserLine = {
+    fire: {
+      width: 5000,
+      transition: {
+        duration: 0.5,
+        delay: 1.5,
+      },
+    },
+    width: {
+      width: 5000,
+    },
+    stop: {
+      width: 0,
+      transition: {
+        duration: 0.5,
       },
     },
   };
 
+  const eyes = {
+    fire: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+      },
+    },
+    stop: {
+      opacity: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
   const textVariant = {
     initial: {
       opacity: 0,
@@ -57,6 +90,67 @@ const TypingText = ({ text }) => {
   };
   return (
     <div className={styles.typingTextContainer}>
+      <div className={styles.laserEyesContainer}>
+        <div className={styles.eyesContainer}>
+          <div className={styles.eye}>
+            <motion.div
+              variants={eyes}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.outerEye}
+            ></motion.div>
+            <motion.div
+              variants={eyes}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.innerEye}
+            ></motion.div>
+          </div>
+          <div className={styles.laserContainer}>
+            <motion.div
+              variants={laserLine}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.outerLine}
+              onAnimationComplete={() => {
+                setClicked(false);
+              }}
+            ></motion.div>
+            <motion.div
+              variants={laserLine}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.innerLine}
+            ></motion.div>
+          </div>
+        </div>
+        <div className={styles.eyesContainer}>
+          <div className={styles.eye}>
+            <motion.div
+              variants={eyes}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.outerEye}
+            ></motion.div>
+            <motion.div
+              variants={eyes}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.innerEye}
+            ></motion.div>
+          </div>
+          <div className={styles.laserContainer}>
+            <motion.div
+              variants={laserLine}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.outerLine}
+            ></motion.div>
+            <motion.div
+              variants={laserLine}
+              animate={clicked ? "fire" : "stop"}
+              className={styles.innerLine}
+            ></motion.div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.mobileGuide}>
+        <Image src={"/mobileGuide.png"} width={200} height={200} />
+      </div>
       <motion.div
         variants={textContainerVariants}
         className={styles.textContainer}

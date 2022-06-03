@@ -32,7 +32,7 @@
 .typingTextContainer {
   position: absolute;
   height: fit-content;
-  top: 75vh;
+  bottom: 50px;
   z-index: 1;
 }
 .buttonContainer {
@@ -51,4 +51,84 @@
 .flashingTriangle {
   display: inline-block;
   margin-right: 7px;
+}
+.laserEyesContainer {
+  display: flex;
+  position: absolute;
+  width: 50px;
+  top: 50px;
+  left: 80px;
+}
+.laserContainer {
+  position: absolute;
+  transform: rotate(-30deg);
+  transform-origin: left;
+  top: 14px;
+  left: 31px;
+  z-index: 2;
+}
+.eyesContainer {
+  display: flex;
+  width: 35px;
+  justify-content: space-between;
+  position: relative;
+  .eye {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .outerEye {
+    width: 50px;
+    height: 50px;
+    background: red;
+    border-radius: 50%;
+    filter: blur(15px);
+    transform-origin: center;
+    opacity: 0;
+  }
+  .innerEye {
+    background: #fff;
+    width: 20px;
+    border-radius: 50%;
+    filter: blur(5px);
+    height: 20px;
+    position: absolute;
+    transform-origin: center;
+    opacity: 0;
+  }
+}
+@keyframes grow {
+  to {
+    width: 100px;
+  }
+}
+.innerLine {
+  height: 5px;
+  width: 100%;
+  background: white;
+  filter: blur(1px);
+  // transform: rotate(-30deg);
+  transform-origin: left !important;
+  position: absolute;
+  bottom: 5px;
+}
+.outerLine {
+  transform-origin: left;
+  height: 15px;
+  width: 100%;
+  background: red;
+  // transform: rotate(-30deg);
+  //margin-top: 50px;
+  filter: blur(16px);
+}
+
+@media (min-width: 1000px) {
+  .typingTextContainer {
+    position: absolute;
+    height: fit-content;
+    // top: 75vh;
+    z-index: 1;
+  }
 }

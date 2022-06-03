@@ -8,46 +8,12 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [clicked, setClicked] = useState(false);
-  const [laserColour, setLaserColour] = useState("ff0000");
   useEffect(() => {
     setTimeout(() => {
       setLoading();
     }, 8000);
   }, []);
   const colors = ["#06ff29", "ff0000", "#06aeff", "#da06ff"];
-  const laserLine = {
-    fire: {
-      width: 5000,
-      transition: {
-        duration: 0.5,
-        delay: 1.5,
-      },
-    },
-    width: {
-      width: 5000,
-    },
-    stop: {
-      width: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
-  const eyes = {
-    fire: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-      },
-    },
-    stop: {
-      opacity: 0,
-      transition: {
-        duration: 1,
-      },
-    },
-  };
   return (
     <div className={styles.container} onClick={() => setClicked(true)}>
       <Head>
@@ -72,85 +38,75 @@ export default function Home() {
         </div>
       ) : (
         <>
-          {" "}
-          <div className={styles.introPageContainer}>
-            <div className={styles.typingTextContainer}>
-              <div className={styles.laserEyesContainer}>
-                <div className={styles.eyesContainer}>
-                  <div className={styles.eye}>
-                    <motion.div
-                      variants={eyes}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.outerEye}
-                      style={{ backgroundColor: laserColour }}
-                    ></motion.div>
-                    <motion.div
-                      variants={eyes}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.innerEye}
-                    ></motion.div>
-                  </div>
-                  <div className={styles.laserContainer}>
-                    <motion.div
-                      variants={laserLine}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.outerLine}
-                      style={{ backgroundColor: laserColour }}
-                      onAnimationComplete={() => {
-                        // setLaserColour(colors[Math.floor(Math.random() * 4)]);
-                        setClicked(false);
-                      }}
-                    ></motion.div>
-                    <motion.div
-                      variants={laserLine}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.innerLine}
-                    ></motion.div>
-                  </div>
+          <div className={styles.background}>
+            <Image
+              src={"/background.JPG"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+            />
+            {/* <Image
+              src={"/shadow.gif"}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+            /> */}
+          </div>
+          <motion.div
+            className={styles.introPageContainer}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+          >
+            <div className={styles.socialsContainer}>
+              <a
+                href={"https://twitter.com/reducedtoclear_"}
+                className={styles.social}
+                target={"_blank"}
+                rel={"noreferrer"}
+              >
+                <Image
+                  src={"/twitter.png"}
+                  width={80}
+                  height={80}
+                  className={styles.socialImage}
+                />
+              </a>
+              <div className={`${styles.social} ${styles.discord}`}>
+                <div className={styles.discordHover}>
+                  <Image
+                    src={"/discordHover.png"}
+                    width={80}
+                    height={80}
+                    className={styles.socialImage}
+                  />
                 </div>
-                <div className={styles.eyesContainer}>
-                  <div className={styles.eye}>
-                    <motion.div
-                      variants={eyes}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.outerEye}
-                      style={{ backgroundColor: laserColour }}
-                    ></motion.div>
-                    <motion.div
-                      variants={eyes}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.innerEye}
-                    ></motion.div>
-                  </div>
-                  <div className={styles.laserContainer}>
-                    <motion.div
-                      variants={laserLine}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.outerLine}
-                      style={{ backgroundColor: laserColour }}
-                    ></motion.div>
-                    <motion.div
-                      variants={laserLine}
-                      animate={clicked ? "fire" : "stop"}
-                      className={styles.innerLine}
-                    ></motion.div>
-                  </div>
-                </div>
+                <motion.div
+                  className={styles.discordBase}
+                  whileHover={{ opacity: 0 }}
+                  whileTap={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Image
+                    src={"/discord.png"}
+                    width={80}
+                    height={80}
+                    className={styles.socialImage}
+                  />
+                </motion.div>
               </div>
+            </div>
+
+            <div className={styles.typingTextContainer}>
               <TypingText
                 text={
                   "Dark forces of the non-fungible kind are converging XX/XX/2022 @ 11:11PM EST..."
                 }
+                clicked={clicked}
+                setClicked={(val) => setClicked(val)}
               />
-
-              {/* <Image
-                src={"/testLogo.png"}
-                width={200}
-                height={200}
-                className={styles.logo}
-              /> */}
             </div>
-          </div>
+          </motion.div>
         </>
       )}
     </div>
