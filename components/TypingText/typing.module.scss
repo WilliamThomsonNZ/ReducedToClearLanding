@@ -60,9 +60,12 @@
   top: 50px;
   left: 80px;
 }
+.canvasContainer {
+  position: absolute;
+}
 .laserContainer {
   position: absolute;
-  transform: rotate(-30deg);
+  transform: rotate(10deg);
   transform-origin: left;
   top: 14px;
   left: 31px;

@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import styles from "./typing.module.scss";
 import { motion } from "framer-motion";
 import Triangle from "../../assets/triangle.svg";
-const TypingText = ({ text, clicked, setClicked }) => {
+const TypingText = ({
+  text,
+  clicked,
+  setClicked,
+  angle,
+  rightEyeRef,
+  leftEyeRef,
+}) => {
   const splitText = text.split("");
   const textContainerVariants = {
     initial: { opacity: 0 },
@@ -18,14 +25,14 @@ const TypingText = ({ text, clicked, setClicked }) => {
   };
   const laserLine = {
     fire: {
-      width: 5000,
+      width: 0,
       transition: {
         duration: 0.5,
         delay: 1.5,
       },
     },
     width: {
-      width: 5000,
+      width: 0,
     },
     stop: {
       width: 0,
@@ -88,11 +95,14 @@ const TypingText = ({ text, clicked, setClicked }) => {
       },
     },
   };
+  //   var canvas = document.getElementById('tutorial');
+  // var ctx = canvas.getContext('2d');
+
   return (
     <div className={styles.typingTextContainer}>
       <div className={styles.laserEyesContainer}>
         <div className={styles.eyesContainer}>
-          <div className={styles.eye}>
+          <div className={styles.eye} ref={leftEyeRef}>
             <motion.div
               variants={eyes}
               animate={clicked ? "fire" : "stop"}
@@ -102,6 +112,11 @@ const TypingText = ({ text, clicked, setClicked }) => {
               variants={eyes}
               animate={clicked ? "fire" : "stop"}
               className={styles.innerEye}
+              onAnimationComplete={() => {
+                setTimeout(() => {
+                  setClicked(false);
+                }, 1000);
+              }}
             ></motion.div>
           </div>
           <div className={styles.laserContainer}>
@@ -109,9 +124,6 @@ const TypingText = ({ text, clicked, setClicked }) => {
               variants={laserLine}
               animate={clicked ? "fire" : "stop"}
               className={styles.outerLine}
-              onAnimationComplete={() => {
-                setClicked(false);
-              }}
             ></motion.div>
             <motion.div
               variants={laserLine}
@@ -121,7 +133,7 @@ const TypingText = ({ text, clicked, setClicked }) => {
           </div>
         </div>
         <div className={styles.eyesContainer}>
-          <div className={styles.eye}>
+          <div className={styles.eye} ref={rightEyeRef}>
             <motion.div
               variants={eyes}
               animate={clicked ? "fire" : "stop"}
