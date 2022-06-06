@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [clicked, setClicked] = useState(false);
   const [leftEyePosition, setLeftEyePosition] = useState({ x: 0, y: 0 });
   const [rightEyePosition, setRightEyePosition] = useState({ x: 0, y: 0 });
