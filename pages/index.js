@@ -20,7 +20,7 @@ export default function Home() {
     }, 8000);
   }, []);
   function setLaserDirection(e) {
-    if (canvasRef.current == null) return;
+    if (canvasRef.current == null || clicked) return;
     setClicked(true);
     setTimeout(() => {
       runLaserEyes(e);
@@ -155,11 +155,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (leftEyeRef.current != null) {
-      getEyePosition();
-    }
-  }, [leftEyeRef.current]);
-  useEffect(() => {
     if (canvasRef.current != null) {
       setCanvas();
     }
@@ -210,6 +205,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
+            onAnimationComplete={() => getEyePosition()}
           >
             <canvas ref={canvasRef} className={styles.canvasContainer}></canvas>
             <div className={styles.socialsContainer}>
