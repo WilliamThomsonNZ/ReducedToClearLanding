@@ -16,7 +16,7 @@ export default function Home() {
   const rightEyeRef = useRef(null);
   useEffect(() => {
     setTimeout(() => {
-      setLoading();
+      setLoading(false);
     }, 8000);
   }, []);
   function setLaserDirection(e) {
