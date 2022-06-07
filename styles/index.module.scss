@@ -174,3 +174,20 @@
     }
   }
 }
+
+@media (min-width: 1400px) {
+  .socialsContainer {
+    right: 40px;
+    top: 40px;
+    .social {
+      cursor: pointer;
+      .socialImage {
+        width: 80px !important;
+        height: 80px !important;
+      }
+      &.discord {
+        margin-top: 20px;
+      }
+    }
+  }
+}

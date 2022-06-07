@@ -192,6 +192,7 @@ export default function Home() {
               layout="fill"
               objectFit="cover"
               objectPosition="center"
+              priority={true}
             />
             {/* <Image
               src={"/shadow.gif"}
@@ -250,7 +251,7 @@ export default function Home() {
             <div className={styles.typingTextContainer}>
               <TypingText
                 text={
-                  "Dark forces of the non-fungible kind are converging XX/XX/2022 @ 11:11PM EST..."
+                  "Greetings, anon. The overlords refer to me as DOOMape. I will be your guide. Your arrival is most unexpected and preparations are underway. In the mean time, pay careful attention to @reducedtoclear_ for it knows, hears, and sees all. This is the ONLY way we'll contact you."
                 }
                 clicked={clicked}
                 setClicked={(val) => setClicked(val)}

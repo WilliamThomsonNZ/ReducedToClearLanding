@@ -132,7 +132,12 @@
   .typingTextContainer {
     position: absolute;
     height: fit-content;
-    // top: 75vh;
+    left: 200px;
     z-index: 1;
+  }
+  .textContainer {
+    max-width: 800px;
+    font-size: 11px;
+    padding: 25px 35px;
   }
 }
