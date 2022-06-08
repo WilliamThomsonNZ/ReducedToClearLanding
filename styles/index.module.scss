@@ -158,7 +158,21 @@
   //margin-top: 50px;
   filter: blur(16px);
 }
-
+.gifContainer {
+  display: none;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+.background .gifImage {
+  width: 1000px;
+  height: 675px;
+  max-width: 100%;
+  max-width: 100%;
+  position: absolute;
+  left: 0;
+}
 @media (min-width: 550px) {
   .loadingAnimation {
     .loadingAnimationImage {
@@ -175,6 +189,34 @@
   }
 }
 
+@media (min-width: 1000px) {
+  .gifContainer {
+    display: flex;
+    max-width: 1920px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .eyesTest {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    bottom: 156px;
+    left: 180px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .eyesContainer {
+    width: 40px;
+    .innerEye {
+      width: 25px;
+      height: 25px;
+    }
+    .outerEye {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
 @media (min-width: 1400px) {
   .socialsContainer {
     right: 40px;
@@ -188,6 +230,47 @@
       &.discord {
         margin-top: 20px;
       }
+    }
+  }
+  .background .gifImage {
+    width: 1400px;
+    height: 1000px;
+  }
+  .eyesTest {
+    bottom: 246px;
+    left: 233px;
+  }
+  .eyesContainer {
+    width: 53px;
+    .innerEye {
+      width: 30px;
+      height: 30px;
+    }
+    .outerEye {
+      width: 70px;
+      height: 70px;
+    }
+  }
+}
+
+@media (min-width: 1800px) {
+  .background .gifImage {
+    width: 1800px;
+    height: 1300px;
+  }
+  .eyesTest {
+    bottom: 329px;
+    left: 292px;
+  }
+  .eyesContainer {
+    width: 75px;
+    .innerEye {
+      width: 35px;
+      height: 35px;
+    }
+    .outerEye {
+      width: 80px;
+      height: 80px;
     }
   }
 }

@@ -3,6 +3,8 @@ import Image from "next/image";
 import styles from "./typing.module.scss";
 import { motion } from "framer-motion";
 import Triangle from "../../assets/triangle.svg";
+import useWindowWidth from "../../hooks/useWindowWidth";
+
 const TypingText = ({
   text,
   clicked,
@@ -11,6 +13,7 @@ const TypingText = ({
   rightEyeRef,
   leftEyeRef,
 }) => {
+  const width = useWindowWidth(200);
   const splitText = text.split("");
   const textContainerVariants = {
     initial: { opacity: 0 },
@@ -19,7 +22,7 @@ const TypingText = ({
       transition: {
         duration: 0,
         staggerChildren: 0.04,
-        delayChildren: 2,
+        delayChildren: width > 1000 ? 13 : 2,
       },
     },
   };
@@ -115,7 +118,7 @@ const TypingText = ({
               onAnimationComplete={() => {
                 setTimeout(() => {
                   setClicked(false);
-                }, 1000);
+                }, 1500);
               }}
             ></motion.div>
           </div>

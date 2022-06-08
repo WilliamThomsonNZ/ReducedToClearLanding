@@ -4,28 +4,62 @@ import styles from "../styles/index.module.scss";
 import TypingText from "../components/TypingText";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-
+import useWindowWidth from "../hooks/useWindowWidth";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [clicked, setClicked] = useState(false);
   const [leftEyePosition, setLeftEyePosition] = useState({ x: 0, y: 0 });
   const [rightEyePosition, setRightEyePosition] = useState({ x: 0, y: 0 });
-  // const [wayPoints, setWayPoints] = useState([]);
+  const [laserEyesActive, setLaserEyesActive] = useState(false);
   let wayPoints = [];
   const leftEyeRef = useRef(null);
   const rightEyeRef = useRef(null);
+  const leftEyeDesktopRef = useRef(null);
+  const rightEyeDesktopRef = useRef(null);
+  const gifContainer = useRef(null);
+  const width = useWindowWidth();
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 8000);
+    setTimeout(() => {
+      setLaserEyesActive(true);
+    }, 20000);
   }, []);
+
   function setLaserDirection(e) {
-    if (canvasRef.current == null || clicked) return;
+    if (canvasRef.current == null || clicked || !laserEyesActive) return;
     setClicked(true);
     setTimeout(() => {
       runLaserEyes(e);
     }, 1000);
   }
+  const eyes = {
+    fire: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+      },
+    },
+    stop: {
+      opacity: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
+  const textVariant = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.05,
+      },
+    },
+  };
 
   const canvasRef = useRef(null);
   function setCanvas() {
@@ -35,47 +69,55 @@ export default function Home() {
   }
 
   function getEyePosition() {
-    const leftEye = leftEyeRef.current.getBoundingClientRect();
-    const rightEye = rightEyeRef.current.getBoundingClientRect();
-    setLeftEyePosition({ x: leftEye.x + 25, y: leftEye.y + 25 });
-    setRightEyePosition({ x: rightEye.x + 25, y: rightEye.y + 25 });
+    let leftEye = leftEyeDesktopRef.current.getBoundingClientRect();
+    let rightEye = rightEyeDesktopRef.current.getBoundingClientRect();
+    let xAdditional = 40;
+    if (width < 1000) {
+      xAdditional = 25;
+      leftEye = leftEyeRef.current.getBoundingClientRect();
+      rightEye = rightEyeRef.current.getBoundingClientRect();
+    }
+    setLeftEyePosition({ x: leftEye.x + xAdditional, y: leftEye.y + 25 });
+    setRightEyePosition({ x: rightEye.x + xAdditional, y: rightEye.y + 25 });
   }
 
   function fire(rightLine, leftLine) {
     //Get context for canvas & clear
     const ctx = canvasRef.current.getContext("2d");
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
+    const widthOuter = width > 1400 ? 20 : 15;
+    const widthInner = width > 1400 ? 10 : 5;
+    const innerBlur = width > 1400 ? 2 : 1;
     // LeftEye
     ctx.beginPath();
     ctx.moveTo(leftEyePosition.x, leftEyePosition.y);
     ctx.lineTo(leftLine.x, leftLine.y);
-    ctx.lineWidth = 15;
+    ctx.lineWidth = widthOuter;
     ctx.strokeStyle = "red";
     ctx.filter = "blur(15px)";
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(leftEyePosition.x, leftEyePosition.y);
     ctx.lineTo(leftLine.x, leftLine.y);
-    ctx.lineWidth = 5;
+    ctx.lineWidth = widthInner;
     ctx.strokeStyle = "#fff";
-    ctx.filter = "blur(1px)";
+    ctx.filter = `blur(${innerBlur}px)`;
     ctx.stroke();
 
     //Right eye
     ctx.beginPath();
     ctx.moveTo(rightEyePosition.x, rightEyePosition.y);
     ctx.lineTo(rightLine.x + 10, rightLine.y + 10);
-    ctx.lineWidth = 15;
+    ctx.lineWidth = widthOuter;
     ctx.strokeStyle = "red";
     ctx.filter = "blur(15px)";
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(rightEyePosition.x, rightEyePosition.y);
     ctx.lineTo(rightLine.x + 10, rightLine.y + 10);
-    ctx.lineWidth = 5;
+    ctx.lineWidth = widthInner;
     ctx.strokeStyle = "#fff";
-    ctx.filter = "blur(1px)";
+    ctx.filter = `blur(${innerBlur}px)`;
     ctx.stroke();
   }
   const leftLine = {
@@ -194,18 +236,50 @@ export default function Home() {
               objectPosition="center"
               priority={true}
             />
-            {/* <Image
-              src={"/shadow.gif"}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-            /> */}
+            <motion.div className={styles.gifContainer} ref={gifContainer}>
+              <img src={"/gify.gif"} className={styles.gifImage} />
+              <div className={styles.eyesTest}>
+                <div className={styles.eyesContainer}>
+                  <div className={styles.eye} ref={leftEyeDesktopRef}>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.outerEye}
+                    ></motion.div>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.innerEye}
+                      // onAnimationComplete={() => {
+                      //   setTimeout(() => {
+                      //     setClicked(false);
+                      //   }, 1000);
+                      // }}
+                    ></motion.div>
+                  </div>
+                </div>
+                <div className={styles.eyesContainer}>
+                  <div className={styles.eye} ref={rightEyeDesktopRef}>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.outerEye}
+                    ></motion.div>
+                    <motion.div
+                      variants={eyes}
+                      animate={clicked ? "fire" : "stop"}
+                      className={styles.innerEye}
+                    ></motion.div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
           <motion.div
             className={styles.introPageContainer}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 1, delay: width > 1000 ? 12 : 1 }}
             onAnimationComplete={() => getEyePosition()}
           >
             <canvas ref={canvasRef} className={styles.canvasContainer}></canvas>
@@ -247,11 +321,13 @@ export default function Home() {
                 </motion.div>
               </div>
             </div>
-
+            {/* <div className={styles.guideDesktop}>
+              <Image src={"/mobileGuide.png"} width={400} height={400} />
+            </div> */}
             <div className={styles.typingTextContainer}>
               <TypingText
                 text={
-                  "Greetings, anon. The overlords refer to me as DOOMape. I will be your guide. Your arrival is most unexpected and preparations are underway. In the mean time, pay careful attention to @reducedtoclear_ for it knows, hears, and sees all. This is the ONLY way we'll contact you."
+                  "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlords official messenger @reducedtoclear_ that is the ONLY way we will contact you."
                 }
                 clicked={clicked}
                 setClicked={(val) => setClicked(val)}

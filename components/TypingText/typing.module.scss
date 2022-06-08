@@ -28,7 +28,9 @@
     line-height: 2;
   }
 }
-
+.gifContainer {
+  display: none;
+}
 .typingTextContainer {
   position: absolute;
   height: fit-content;
@@ -132,12 +134,19 @@
   .typingTextContainer {
     position: absolute;
     height: fit-content;
-    left: 200px;
+    left: 35%;
+    bottom: 0;
     z-index: 1;
+  }
+  .mobileGuide {
+    display: none;
   }
   .textContainer {
     max-width: 800px;
     font-size: 11px;
     padding: 25px 35px;
+  }
+  .laserEyesContainer {
+    display: none;
   }
 }
