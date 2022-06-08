@@ -48,14 +48,16 @@
   left: 20px;
 }
 .loadingAnimation {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   background: #000;
   width: 100vw;
   height: 100vh;
+  z-index: 10;
   .loadingAnimationInner {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .loadingAnimationImage {
     width: 400px;
@@ -94,7 +96,7 @@
   img {
     object-fit: cover;
 
-    height: 100vh;
+    height: 9vh;
     width: 100vw;
   }
 }
@@ -165,6 +167,12 @@
   height: 100%;
   justify-content: center;
 }
+.backgroundVideo {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
 .background .gifImage {
   width: 1000px;
   height: 675px;
@@ -172,6 +180,7 @@
   max-width: 100%;
   position: absolute;
   left: 0;
+  object-fit: cover;
 }
 @media (min-width: 550px) {
   .loadingAnimation {
@@ -255,12 +264,12 @@
 
 @media (min-width: 1800px) {
   .background .gifImage {
-    width: 1800px;
-    height: 1300px;
+    width: 1920px;
+    height: 1080px;
   }
   .eyesTest {
     bottom: 329px;
-    left: px;
+    left: 302px;
   }
   .eyesContainer {
     width: 75px;
