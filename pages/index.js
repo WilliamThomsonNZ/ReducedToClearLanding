@@ -237,7 +237,7 @@ export default function Home() {
               priority={true}
             />
             <motion.div className={styles.gifContainer} ref={gifContainer}>
-              <img src={"/gify.gif"} className={styles.gifImage} />
+              <img src={"/testpng.png"} classclassName={styles.gifImage} />
               <div className={styles.eyesTest}>
                 <div className={styles.eyesContainer}>
                   <div className={styles.eye} ref={leftEyeDesktopRef}>
