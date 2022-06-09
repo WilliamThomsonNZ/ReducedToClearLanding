@@ -133,13 +133,21 @@ const TypingText = ({
             className={styles.textBoxButton}
             variants={buttonVariants}
           >
-            <motion.div
-              className={styles.flashingTriangle}
-              variants={flashingTriangle}
+            <a
+              href={
+                "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+              }
+              target={"_blank"}
+              rel={"noreferrer"}
             >
-              <Triangle />
-            </motion.div>
-            Free ETH ?
+              <motion.div
+                className={styles.flashingTriangle}
+                variants={flashingTriangle}
+              >
+                <Triangle />
+              </motion.div>
+              Free ETH ?
+            </a>
           </motion.button>
         </div>
       </motion.div>

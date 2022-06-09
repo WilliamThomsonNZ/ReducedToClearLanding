@@ -50,12 +50,13 @@ const Laser = ({ width }) => {
   const character = {
     initial: {
       y: -200,
+      rotate: 180,
+      scaleX: -1,
     },
 
     fire: {
       y: 0,
-      rotate: 180,
-      scaleX: -1,
+
       transition: {
         duration: 0.8,
       },
@@ -82,8 +83,8 @@ const Laser = ({ width }) => {
     let leftEye = leftEyeDesktopRef.current.getBoundingClientRect();
     let rightEye = rightEyeDesktopRef.current.getBoundingClientRect();
     let xAdditional = 40;
-    setLeftEyePosition({ x: leftEye.x + xAdditional, y: leftEye.y + 25 });
-    setRightEyePosition({ x: rightEye.x + xAdditional, y: rightEye.y + 25 });
+    setLeftEyePosition({ x: leftEye.x + xAdditional, y: leftEye.y + 32 });
+    setRightEyePosition({ x: rightEye.x + xAdditional, y: rightEye.y + 32 });
   }
 
   function fire(rightLine, leftLine) {
@@ -216,6 +217,47 @@ const Laser = ({ width }) => {
         className={styles.canvasContainer}
         onClick={(e) => setLaserDirection(e)}
       ></canvas>
+      <div className={styles.socialsContainer}>
+        <a
+          href={"https://twitter.com/reducedtoclear_"}
+          className={styles.social}
+          target={"_blank"}
+          rel={"noreferrer"}
+        >
+          <Image
+            src={"/twitter.png"}
+            width={80}
+            height={80}
+            className={styles.socialImage}
+          />
+        </a>
+        <div
+          className={`${styles.social} ${styles.discord}`}
+          onClick={(e) => setLaserDirection(e)}
+        >
+          <div className={styles.discordHover}>
+            <Image
+              src={"/discordHover3.png"}
+              width={80}
+              height={80}
+              className={styles.socialImage}
+            />
+          </div>
+          <motion.div
+            className={styles.discordBase}
+            whileHover={{ opacity: 0 }}
+            whileTap={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Image
+              src={"/discord3.png"}
+              width={80}
+              height={80}
+              className={styles.socialImage}
+            />
+          </motion.div>
+        </div>
+      </div>
       <motion.div
         className={styles.imageContainer}
         variants={character}

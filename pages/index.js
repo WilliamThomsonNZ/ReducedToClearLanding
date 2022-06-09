@@ -88,68 +88,23 @@ export default function Home() {
         ) : (
           <>
             <Laser width={width} />
-            <div className={styles.container}>
-              <motion.div
-                className={styles.introPageContainer}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: width > 1000 ? 5.5 : 0 }}
-              >
-                <div className={styles.socialsContainer}>
-                  <a
-                    href={"https://twitter.com/reducedtoclear_"}
-                    className={styles.social}
-                    target={"_blank"}
-                    rel={"noreferrer"}
-                  >
-                    <Image
-                      src={"/twitter.png"}
-                      width={80}
-                      height={80}
-                      className={styles.socialImage}
-                    />
-                  </a>
-                  <div className={`${styles.social} ${styles.discord}`}>
-                    <div className={styles.discordHover}>
-                      <Image
-                        src={"/discordHover3.png"}
-                        width={80}
-                        height={80}
-                        className={styles.socialImage}
-                      />
-                    </div>
-                    <motion.div
-                      className={styles.discordBase}
-                      whileHover={{ opacity: 0 }}
-                      whileTap={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Image
-                        src={"/discord3.png"}
-                        width={80}
-                        height={80}
-                        className={styles.socialImage}
-                      />
-                    </motion.div>
-                  </div>
-                </div>
-                {/* <div className={styles.guideDesktop}>
-              <Image src={"/mobileGuide.png"} width={400} height={400} />
-            </div> */}
-                <div className={styles.typingTextContainer}>
-                  <TypingText
-                    text={
-                      "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlords official messenger @reducedtoclear_ that is the ONLY way we will contact you."
-                    }
-                    clicked={clicked}
-                    setClicked={(val) => setClicked(val)}
-                    angle={10}
-                    leftEyeRef={leftEyeRef}
-                    rightEyeRef={rightEyeRef}
-                  />
-                </div>
-              </motion.div>
-            </div>
+            <motion.div
+              className={styles.typingTextContainer}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: width > 1000 ? 5.5 : 0 }}
+            >
+              <TypingText
+                text={
+                  "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlords official messenger @reducedtoclear_ that is the ONLY way we will contact you."
+                }
+                clicked={clicked}
+                setClicked={(val) => setClicked(val)}
+                angle={10}
+                leftEyeRef={leftEyeRef}
+                rightEyeRef={rightEyeRef}
+              />
+            </motion.div>
           </>
         )}
       </AnimatePresence>
