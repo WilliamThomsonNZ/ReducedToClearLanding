@@ -22,7 +22,7 @@ const TypingText = ({
       transition: {
         duration: 0,
         staggerChildren: 0.04,
-        delayChildren: width > 1000 ? 6.5 : 1,
+        delayChildren: width > 1000 ? 17.5 : 10.5,
       },
     },
   };
@@ -73,7 +73,7 @@ const TypingText = ({
       className={styles.typingTextContainer}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1, delay: width > 1000 ? 5.5 : 0 }}
+      transition={{ duration: 1, delay: width > 1000 ? 17 : 10 }}
     >
       {/* <div className={styles.laserEyesContainer}>
         <div className={styles.eyesContainer}>

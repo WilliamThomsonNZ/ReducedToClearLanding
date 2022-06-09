@@ -62,6 +62,18 @@ export default function Home() {
         priority={true}
         className={styles.mobileBackground}
       />
+      <motion.div className={styles.typingTextContainer}>
+        <TypingText
+          text={
+            "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlord's official messenger @reducedtoclear_ that is the ONLY way we will contact you."
+          }
+          clicked={clicked}
+          setClicked={(val) => setClicked(val)}
+          angle={10}
+          leftEyeRef={leftEyeRef}
+          rightEyeRef={rightEyeRef}
+        />
+      </motion.div>
       <AnimatePresence exitBeforeEnter>
         {loading ? (
           <motion.div
@@ -88,18 +100,6 @@ export default function Home() {
         ) : (
           <>
             <Laser width={width} />
-            <motion.div className={styles.typingTextContainer}>
-              <TypingText
-                text={
-                  "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlord's official messenger @reducedtoclear_ that is the ONLY way we will contact you."
-                }
-                clicked={clicked}
-                setClicked={(val) => setClicked(val)}
-                angle={10}
-                leftEyeRef={leftEyeRef}
-                rightEyeRef={rightEyeRef}
-              />
-            </motion.div>
           </>
         )}
       </AnimatePresence>
