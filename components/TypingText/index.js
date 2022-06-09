@@ -120,7 +120,7 @@ const TypingText = ({
       </div> */}
 
       <div className={styles.mobileGuide}>
-        <Image src={"/mobileGuide.png"} width={200} height={200} />
+        <Image src={"/mobileGuide-min.png"} width={200} height={200} priority />
       </div>
       <motion.div
         variants={textContainerVariants}
