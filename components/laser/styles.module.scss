@@ -1,6 +1,7 @@
 .canvasContainer {
   position: absolute;
   z-index: 5;
+  display: none;
 }
 
 .imageContainer {
@@ -84,6 +85,9 @@
 
 @media (min-width: 1000px) {
   .imageContainer {
+    display: block;
+  }
+  .canvasContainer {
     display: block;
   }
 }

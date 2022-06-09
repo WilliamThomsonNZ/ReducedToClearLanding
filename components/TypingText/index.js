@@ -69,7 +69,12 @@ const TypingText = ({
   // var ctx = canvas.getContext('2d');
 
   return (
-    <div className={styles.typingTextContainer}>
+    <motion.div
+      className={styles.typingTextContainer}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: width > 1000 ? 5.5 : 0 }}
+    >
       {/* <div className={styles.laserEyesContainer}>
         <div className={styles.eyesContainer}>
         
@@ -151,7 +156,7 @@ const TypingText = ({
           </motion.button>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 
