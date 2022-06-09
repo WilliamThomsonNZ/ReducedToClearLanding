@@ -217,7 +217,12 @@ const Laser = ({ width }) => {
         className={styles.canvasContainer}
         onClick={(e) => setLaserDirection(e)}
       ></canvas>
-      <div className={styles.socialsContainer}>
+      <motion.div
+        className={styles.socialsContainer}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: width > 1000 ? 5.5 : 0 }}
+      >
         <a
           href={"https://twitter.com/reducedtoclear_"}
           className={styles.social}
@@ -257,7 +262,7 @@ const Laser = ({ width }) => {
             />
           </motion.div>
         </div>
-      </div>
+      </motion.div>
       <motion.div
         className={styles.imageContainer}
         variants={character}
