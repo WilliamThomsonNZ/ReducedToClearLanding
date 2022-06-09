@@ -151,7 +151,7 @@ const TypingText = ({
               >
                 <Triangle />
               </motion.div>
-              Free ETH ?
+              How WL ?
             </a>
           </motion.button>
         </div>
