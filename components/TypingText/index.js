@@ -140,7 +140,7 @@ const TypingText = ({
           >
             <a
               href={
-                "https://www.youtube.com/watch?v=zL19uMsnpSU&ab_channel=cameronbarnett"
+                "https://www.youtube.com/watch?v=-AXetJvTfU0&ab_channel=WhittGoldsmith"
               }
               target={"_blank"}
               rel={"noreferrer"}
