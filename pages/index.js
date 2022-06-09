@@ -5,6 +5,7 @@ import TypingText from "../components/TypingText";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import useWindowWidth from "../hooks/useWindowWidth";
+import Laser from "../components/laser";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [clicked, setClicked] = useState(false);
@@ -19,6 +20,7 @@ export default function Home() {
   const rightEyeDesktopRef = useRef(null);
   const gifContainer = useRef(null);
   const width = useWindowWidth();
+  const video = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,208 +28,47 @@ export default function Home() {
     }, 8000);
     setTimeout(() => {
       setLoading(false);
-    }, 8500);
+    }, 8100);
+    // setTimeout(() => {
+    //   setLaserEyesActive(true);
+    // }, 20000);
     setTimeout(() => {
-      setLaserEyesActive(true);
-    }, 20000);
+      video.current.play();
+    }, 10000);
   }, []);
-
-  function setLaserDirection(e) {
-    if (canvasRef.current == null || clicked || !laserEyesActive) return;
-    setClicked(true);
-    setTimeout(() => {
-      runLaserEyes(e);
-    }, 1000);
-  }
-  const eyes = {
-    fire: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-      },
-    },
-    stop: {
-      opacity: 0,
-      transition: {
-        duration: 1,
-      },
-    },
-  };
-  const textVariant = {
-    initial: {
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: 0.05,
-      },
-    },
-  };
-
-  const canvasRef = useRef(null);
-  function setCanvas() {
-    const canvas = canvasRef.current;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  function getEyePosition() {
-    let leftEye = leftEyeDesktopRef.current.getBoundingClientRect();
-    let rightEye = rightEyeDesktopRef.current.getBoundingClientRect();
-    let xAdditional = 40;
-    if (width < 1000) {
-      xAdditional = 25;
-      leftEye = leftEyeRef.current.getBoundingClientRect();
-      rightEye = rightEyeRef.current.getBoundingClientRect();
-    }
-    setLeftEyePosition({ x: leftEye.x + xAdditional, y: leftEye.y + 25 });
-    setRightEyePosition({ x: rightEye.x + xAdditional, y: rightEye.y + 25 });
-  }
-
-  function fire(rightLine, leftLine) {
-    //Get context for canvas & clear
-    const ctx = canvasRef.current.getContext("2d");
-    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    const widthOuter = width > 1400 ? 20 : 15;
-    const widthInner = width > 1400 ? 10 : 5;
-    const innerBlur = width > 1400 ? 2 : 1;
-    // LeftEye
-    ctx.beginPath();
-    ctx.moveTo(leftEyePosition.x, leftEyePosition.y);
-    ctx.lineTo(leftLine.x, leftLine.y);
-    ctx.lineWidth = widthOuter;
-    ctx.strokeStyle = "red";
-    ctx.filter = "blur(15px)";
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(leftEyePosition.x, leftEyePosition.y);
-    ctx.lineTo(leftLine.x, leftLine.y);
-    ctx.lineWidth = widthInner;
-    ctx.strokeStyle = "#fff";
-    ctx.filter = `blur(${innerBlur}px)`;
-    ctx.stroke();
-
-    //Right eye
-    ctx.beginPath();
-    ctx.moveTo(rightEyePosition.x, rightEyePosition.y);
-    ctx.lineTo(rightLine.x + 10, rightLine.y + 10);
-    ctx.lineWidth = widthOuter;
-    ctx.strokeStyle = "red";
-    ctx.filter = "blur(15px)";
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(rightEyePosition.x, rightEyePosition.y);
-    ctx.lineTo(rightLine.x + 10, rightLine.y + 10);
-    ctx.lineWidth = widthInner;
-    ctx.strokeStyle = "#fff";
-    ctx.filter = `blur(${innerBlur}px)`;
-    ctx.stroke();
-  }
-  const leftLine = {
-    x: leftEyePosition.x,
-    y: leftEyePosition.y,
-    vx: 0,
-    vy: 0,
-  };
-
-  const rightLine = {
-    x: rightEyePosition.x,
-    y: rightEyePosition.y,
-    vx: 0,
-    vy: 0,
-  };
-
-  function runLaserEyes(e) {
-    const endY = e.pageY;
-    const endX = e.pageX;
-    const points = calcWaypoints(endX, endY);
-    wayPoints = points;
-    update();
-  }
-
-  function calcWaypoints(endX, endY) {
-    var vertices = [];
-    vertices.push({
-      x: rightEyePosition.x,
-      y: rightEyePosition.y,
-    });
-    vertices.push({
-      x: endX,
-      y: endY,
-    });
-    vertices.push({
-      x: rightEyePosition.x,
-      y: rightEyePosition.y,
-    });
-    var waypoints = [];
-    for (var i = 1; i < vertices.length; i++) {
-      var pt0 = vertices[i - 1];
-      var pt1 = vertices[i];
-      var dx = pt1.x - pt0.x;
-      var dy = pt1.y - pt0.y;
-      for (var j = 0; j < 40; j++) {
-        var x = pt0.x + (dx * j) / 40;
-        var y = pt0.y + (dy * j) / 40;
-        waypoints.push({
-          x: x,
-          y: y,
-        });
-      }
-    }
-    waypoints.push({ x: rightEyePosition.x, y: rightEyePosition.y });
-    waypoints.push({ x: 0, y: 0 });
-    return waypoints;
-  }
-  const t = 1;
-  function update() {
-    let animation;
-    if (t < 82) {
-      fire(rightLine, leftLine);
-      leftLine.x = wayPoints[t - 1].x;
-      leftLine.y = wayPoints[t - 1].y;
-
-      rightLine.x = wayPoints[t - 1].x;
-      rightLine.y = wayPoints[t - 1].y;
-      t++;
-
-      animation = requestAnimationFrame(update);
-    } else {
-      animation = requestAnimationFrame(update);
-      cancelAnimationFrame(animation);
-      const ctx = canvasRef.current.getContext("2d");
-      ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    }
-  }
-
-  useEffect(() => {
-    if (canvasRef.current != null) {
-      setCanvas();
-    }
-  }, [canvasRef.current]);
 
   const colors = ["#06ff29", "ff0000", "#06aeff", "#da06ff"];
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>The wormhole of fuckery...</title>
         <meta name="description" content="Generated by create next app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Image
+      <video
+        className={styles.backgroundVideo}
+        ref={video}
+        width={"100%"}
+        height={"100%"}
+        muted
+      >
+        <source src="video.mp4" type="video/mp4"></source>
+      </video>
+      <Image
         src={"/background.JPG"}
         layout="fill"
         objectFit="cover"
         objectPosition="center"
         priority={true}
-      /> */}
+        className={styles.mobileBackground}
+      />
       <AnimatePresence exitBeforeEnter>
         {loading ? (
           <motion.div
             className={styles.loadingAnimation}
             key={"loadingContainer"}
             exit={{ opacity: 0 }}
-            transition={{ duration: 5 }}
+            transition={{ duration: width > 1000 ? 4 : 2 }}
           >
             {loadingAnimation && (
               <div className={styles.loadingAnimationInner}>
@@ -245,125 +86,71 @@ export default function Home() {
             )}
           </motion.div>
         ) : (
-          <div
-            className={styles.container}
-            onClick={(e) => setLaserDirection(e)}
-          >
-            <video
-              className={styles.backgroundVideo}
-              width={"100%"}
-              height={"100%"}
-              autoPlay
-              muted
-            >
-              <source src="video.mp4" type="video/mp4"></source>
-            </video>
-            <div className={styles.background}>
-              ;
-              <motion.div className={styles.gifContainer} ref={gifContainer}>
-                <div className={styles.eyesTest}>
-                  <div className={styles.eyesContainer}>
-                    <div className={styles.eye} ref={leftEyeDesktopRef}>
-                      <motion.div
-                        variants={eyes}
-                        animate={clicked ? "fire" : "stop"}
-                        className={styles.outerEye}
-                      ></motion.div>
-                      <motion.div
-                        variants={eyes}
-                        animate={clicked ? "fire" : "stop"}
-                        className={styles.innerEye}
-                        // onAnimationComplete={() => {
-                        //   setTimeout(() => {
-                        //     setClicked(false);
-                        //   }, 1000);
-                        // }}
-                      ></motion.div>
+          <>
+            <Laser width={width} />
+            <div className={styles.container}>
+              <motion.div
+                className={styles.introPageContainer}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: width > 1000 ? 5.5 : 0 }}
+              >
+                <div className={styles.socialsContainer}>
+                  <a
+                    href={"https://twitter.com/reducedtoclear_"}
+                    className={styles.social}
+                    target={"_blank"}
+                    rel={"noreferrer"}
+                  >
+                    <Image
+                      src={"/twitter.png"}
+                      width={80}
+                      height={80}
+                      className={styles.socialImage}
+                    />
+                  </a>
+                  <div className={`${styles.social} ${styles.discord}`}>
+                    <div className={styles.discordHover}>
+                      <Image
+                        src={"/discordHover3.png"}
+                        width={80}
+                        height={80}
+                        className={styles.socialImage}
+                      />
                     </div>
+                    <motion.div
+                      className={styles.discordBase}
+                      whileHover={{ opacity: 0 }}
+                      whileTap={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Image
+                        src={"/discord3.png"}
+                        width={80}
+                        height={80}
+                        className={styles.socialImage}
+                      />
+                    </motion.div>
                   </div>
-                  <div className={styles.eyesContainer}>
-                    <div className={styles.eye} ref={rightEyeDesktopRef}>
-                      <motion.div
-                        variants={eyes}
-                        animate={clicked ? "fire" : "stop"}
-                        className={styles.outerEye}
-                      ></motion.div>
-                      <motion.div
-                        variants={eyes}
-                        animate={clicked ? "fire" : "stop"}
-                        className={styles.innerEye}
-                      ></motion.div>
-                    </div>
-                  </div>
+                </div>
+                {/* <div className={styles.guideDesktop}>
+              <Image src={"/mobileGuide.png"} width={400} height={400} />
+            </div> */}
+                <div className={styles.typingTextContainer}>
+                  <TypingText
+                    text={
+                      "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlords official messenger @reducedtoclear_ that is the ONLY way we will contact you."
+                    }
+                    clicked={clicked}
+                    setClicked={(val) => setClicked(val)}
+                    angle={10}
+                    leftEyeRef={leftEyeRef}
+                    rightEyeRef={rightEyeRef}
+                  />
                 </div>
               </motion.div>
             </div>
-            <motion.div
-              className={styles.introPageContainer}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: width > 1000 ? 12 : 1 }}
-              onAnimationComplete={() => getEyePosition()}
-            >
-              <canvas
-                ref={canvasRef}
-                className={styles.canvasContainer}
-              ></canvas>
-              <div className={styles.socialsContainer}>
-                <a
-                  href={"https://twitter.com/reducedtoclear_"}
-                  className={styles.social}
-                  target={"_blank"}
-                  rel={"noreferrer"}
-                >
-                  <Image
-                    src={"/twitter.png"}
-                    width={80}
-                    height={80}
-                    className={styles.socialImage}
-                  />
-                </a>
-                <div className={`${styles.social} ${styles.discord}`}>
-                  <div className={styles.discordHover}>
-                    <Image
-                      src={"/discordHover3.png"}
-                      width={80}
-                      height={80}
-                      className={styles.socialImage}
-                    />
-                  </div>
-                  <motion.div
-                    className={styles.discordBase}
-                    whileHover={{ opacity: 0 }}
-                    whileTap={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Image
-                      src={"/discord3.png"}
-                      width={80}
-                      height={80}
-                      className={styles.socialImage}
-                    />
-                  </motion.div>
-                </div>
-              </div>
-              {/* <div className={styles.guideDesktop}>
-              <Image src={"/mobileGuide.png"} width={400} height={400} />
-            </div> */}
-              <div className={styles.typingTextContainer}>
-                <TypingText
-                  text={
-                    "Greetings, anon. I am DOOMape, sent by the overlord himself to guide you through the smog of web3. Your early arrival is most welcome and preparations are well underway. Pay careful attention to the overlords official messenger @reducedtoclear_ that is the ONLY way we will contact you."
-                  }
-                  clicked={clicked}
-                  setClicked={(val) => setClicked(val)}
-                  angle={10}
-                  leftEyeRef={leftEyeRef}
-                  rightEyeRef={rightEyeRef}
-                />
-              </div>
-            </motion.div>
-          </div>
+          </>
         )}
       </AnimatePresence>
     </>
