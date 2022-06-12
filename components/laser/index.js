@@ -12,12 +12,13 @@ const Laser = ({ width }) => {
   const rightEyeRef = useRef(null);
   const leftEyeDesktopRef = useRef(null);
   const rightEyeDesktopRef = useRef(null);
+  const discordButton = useRef(null);
   let wayPoints = [];
   function setLaserDirection(e) {
     if (canvasRef.current == null || clicked || width < 1000) return;
     setClicked(true);
     setTimeout(() => {
-      runLaserEyes(e);
+      runLaserEyes(e, false);
     }, 1800);
   }
   const eyes = {
@@ -140,9 +141,17 @@ const Laser = ({ width }) => {
     vy: 0,
   };
 
-  function runLaserEyes(e) {
-    const endY = e.pageY;
-    const endX = e.pageX;
+  function runLaserEyes(e, initial) {
+    let endY;
+    let endX;
+    if (!initial) {
+      endY = e.pageY;
+      endX = e.pageX;
+    } else {
+      const element = getOffset(discordButton.current);
+      endY = element.top - 25;
+      endX = element.left - 25;
+    }
     const points = calcWaypoints(endX, endY);
     wayPoints = points;
     update();
@@ -202,14 +211,29 @@ const Laser = ({ width }) => {
       setClicked(false);
     }
   }
+  function getOffset(el) {
+    const rect = el.getBoundingClientRect();
+    return {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+    };
+  }
 
   useEffect(() => {
     console.log("running canvas setup");
     if (canvasRef.current != null) {
       setCanvas();
       getEyePosition();
+      setTimeout(() => {
+        if (canvasRef.current == null || clicked || width < 1000) return;
+        setClicked(true);
+        setTimeout(() => {
+          runLaserEyes({}, true);
+        }, 1800);
+      }, 15000);
     }
   }, [canvasRef.current]);
+
   return (
     <>
       <canvas
@@ -240,7 +264,7 @@ const Laser = ({ width }) => {
           className={`${styles.social} ${styles.discord}`}
           onClick={(e) => setLaserDirection(e)}
         >
-          <div className={styles.discordHover}>
+          <div className={styles.discordHover} ref={discordButton}>
             <Image
               src={"/discordHover3.png"}
               width={80}
