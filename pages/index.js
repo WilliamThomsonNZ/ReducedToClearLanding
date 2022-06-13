@@ -38,7 +38,7 @@ export default function Home() {
   }, []);
 
   const colors = ["#06ff29", "ff0000", "#06aeff", "#da06ff"];
-  const titles = ["Reduced to clear", "Coming soon", "Blue chips beware"];
+  const titles = ["Reduced to clear", "Coming soon", "Bastards of the bear"];
   let index = 0;
   const [titleIndex, setTitleIndex] = useState(0);
   useEffect(() => {
