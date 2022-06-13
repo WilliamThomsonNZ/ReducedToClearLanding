@@ -102,7 +102,7 @@ const Product = ({ product, gender, onChange, productName }) => {
           data-item-description={activeVariant.name}
           data-item-image={activeVariantFile.preview_url}
           data-item-name={name}
-          className={styles.addToCart}
+          className={`snipcart-add-item ${styles.addToCart}`}
         >
           Add to Cart
         </button>
