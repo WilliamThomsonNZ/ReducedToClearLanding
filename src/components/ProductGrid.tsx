@@ -1,4 +1,4 @@
-import Product from "./Product/Product.tsx";
+import Product from "./Product/Product";
 import { useState } from "react";
 const ProductGrid = ({ products }) => {
   if (!products || products.length === 0) return null;
