@@ -1,24 +1,44 @@
+import { useState } from "react";
+
 function TermsPage() {
+  const [address, setAddress] = useState("");
+  const [orderId, setOrderId] = useState("12");
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  async function handleAddressSubmission(): Promise<void> {
+    const pattern = /^0x[a-fA-F0-9]{40}$/;
+    if (!pattern.test(address)) {
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 6000);
+      return;
+    }
+    const response = await fetch("/api/address-collect", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ address, orderId }),
+    });
+    const json = await response.json();
+    if (json.code != 200) return;
+    setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 6000);
+  }
   return (
     <div className="max-w-xl mx-auto prose prose-blue">
-      <h2>Welcome</h2>
-      <p>
-        You&apos;re viewing the{" "}
-        <a
-          href="https://headlessdropshipping.com/"
-          title="Learn more about Headless Dropshipping"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Headless Dropshipping Starter
-        </a>{" "}
-        by Jamie Barton.
-      </p>
-      <p>
-        Build your own Headless eCommerce storefront with Next.js and Snipcart,
-        and deliver swag powered by Printful. End to end commerce, styled using
-        TailwindCSS and deployed on Vercel.
-      </p>
+      {showError && <span>Address not valid!</span>}
+      {showSuccess && <span>Address Added. Keep an eye on your wallet!</span>}
+      <input
+        onChange={(e) => setAddress(e.target.value)}
+        type="text"
+        placeholder="0xABC..123"
+        value={address}
+      />
+      <button onClick={() => handleAddressSubmission()}>Submit</button>
     </div>
   );
 }

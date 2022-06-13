@@ -1,0 +1,62 @@
+@import "../styles/global.module.scss";
+
+.merchOverlayContainer {
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  padding-bottom: 100px;
+}
+.productGridContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 75px;
+  padding-bottom: 60px;
+}
+.merchShowButton {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background: none;
+  font-family: $font;
+  border: none;
+  font-size: 35px;
+  -webkit-text-stroke: 1px;
+  -webkit-text-stroke-color: #fff;
+  cursor: pointer;
+}
+.checkoutButton {
+  width: 80%;
+  max-width: 350px;
+  margin: 0 auto;
+  display: block;
+  margin: 0 auto;
+  font-family: "Press Start 2P";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 27px;
+  padding: 18px 0;
+  background: #000;
+  border: 3px solid #ffffff;
+  color: #fff;
+  cursor: pointer;
+}
+@media (min-width: 1000px) {
+  .productGridContainer {
+    flex-direction: row;
+    margin-top: 200px;
+  }
+  .merchOverlayContainer {
+    padding-bottom: 0;
+  }
+  .merchShowButton {
+    right: 25px;
+    top: 25px;
+    font-size: 45px;
+  }
+}

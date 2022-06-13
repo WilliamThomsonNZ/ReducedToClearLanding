@@ -41,6 +41,12 @@ export default async function handler(
   //     .json({ message: "Unable to verify Snipcart webhook token" });
   // }
 
+  //This will be called from snipcart when the order is processed. 
+  //We can then redirect our user to the custom thank you message where we will show the form input. 
+  //To stop the user from sending their address twice. We will send a timestamp and the order ID in the 
+  //We can also grab the users email address that was submitted so that we can see who has entered./ 
+  //Once the user has input their address they will be redirected to the home page.
+  //
   try {
     switch (eventName) {
       case "order.completed":

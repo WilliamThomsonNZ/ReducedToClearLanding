@@ -1,17 +1,24 @@
-const VariantPicker = ({ variants, ...props }) => {
+import styles from "../components/Product/product.module.scss";
+import FlashingTriangle from "./flashingTriangle/index";
+const VariantPicker = ({ variants, productName, selected, ...props }) => {
   if (variants.length === (0 || 1)) return null;
 
   return (
-    <select
-      {...props}
-      className="appearance-none w-full relative mb-3 sm:mb-0 flex-grow sm:mr-3 pl-3 py-2 bg-white border border-gray-300 focus:border-gray-500 shadow-sm text-gray-500 text-sm focus:outline-none focus:text-gray-900 rounded"
-    >
+    <div className={styles.variantsContainer}>
       {variants.map(({ external_id, name }) => (
-        <option key={external_id} value={external_id}>
+        <label key={`${external_id}-label`}>
+          {selected == external_id && <FlashingTriangle />}
           {name}
-        </option>
+          <input
+            type={"radio"}
+            key={external_id}
+            value={external_id}
+            name={`${productName}-size`}
+            onChange={props.onChange}
+          />
+        </label>
       ))}
-    </select>
+    </div>
   );
 };
 

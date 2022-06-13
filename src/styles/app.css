@@ -114,3 +114,9 @@
 .snipcart__box {
   @apply bg-white;
 } */
+
+body {
+  margin: 0;
+  background: url("/background.JPG");
+  background-position: center center;
+}
